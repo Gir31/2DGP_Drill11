@@ -4,6 +4,7 @@ from pico2d import *
 import game_framework
 
 import game_world
+from Lecture16_Collision.game_world import add_collision_pair
 from grass import Grass
 from boy import Boy
 from ball import Ball
@@ -31,8 +32,18 @@ def init():
     game_world.add_object(boy, 1)
 
     # fill here
+    balls = [Ball(random.randint(100, 1600 - 100), 60 ,0) for _ in range(30)]
+    game_world.add_objects(balls, 1) # 게임월드에 추가
 
+    zombies = [Zombie() for _ in range(5)]
+    game_world.add_objects(zombies, 1)
 
+    # 충돌 대상들을 등록해주기
+    game_world.add_collision_pair('boy:ball', boy, None)
+    for ball in balls:
+        game_world.add_collision_pair('boy:ball', None, ball)
+
+    # { 'boy:ball' : [ [boy], [ball1, ball2, ball3, ...ball30] ] }
 
 
 def finish():
@@ -43,6 +54,8 @@ def finish():
 def update():
     game_world.update()
     # fill here
+    # copy는 새로운 리스트를 만들어냄
+    game_world.handle_collisions()
 
 
 def draw():

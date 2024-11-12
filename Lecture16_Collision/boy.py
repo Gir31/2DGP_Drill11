@@ -153,6 +153,7 @@ class Boy:
     def draw(self):
         self.state_machine.draw()
         self.font.draw(self.x-10, self.y + 50, f'{self.ball_count:02d}', (255, 255, 0))
+        draw_rectangle(*self.get_bb()) # '*' 튜플을 각각의 성분으로 분해해주는 것
 
     def fire_ball(self):
         if self.ball_count > 0:
@@ -162,8 +163,9 @@ class Boy:
 
     def get_bb(self):
         # fill here
-        pass
-
+        return self.x - 20, self.y - 50, self.x + 20, self.y + 50
+        # 네개의 값으로 구성된 한개의 튜플을 넘겨주는 것
     def handle_collision(self, group, other):
         # fill here
-        pass
+        if group == 'boy:ball':
+            self.ball_count += 1
