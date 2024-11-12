@@ -28,5 +28,5 @@ class Ball:
         # fill here
         if group == 'boy:ball':
             game_world.remove_object(self)
-        if group == 'zombie:ball':
+        if group == 'boy:zombie':
             game_world.remove_object(self)
