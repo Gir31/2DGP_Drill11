@@ -3,6 +3,7 @@
 from pico2d import get_time, load_image, SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, SDLK_LEFT, SDLK_RIGHT, load_font, \
     draw_rectangle
 
+import play_mode
 from ball import Ball
 import game_world
 import game_framework
@@ -160,6 +161,10 @@ class Boy:
             self.ball_count -= 1
             ball = Ball(self.x, self.y, self.face_dir*10)
             game_world.add_object(ball)
+
+            game_world.add_collision_pair('zombie:ball', None, ball)
+            for zombie in play_mode.zombies:
+                game_world.add_collision_pair('zombie:ball', zombie, None)
 
     def get_bb(self):
         # fill here
